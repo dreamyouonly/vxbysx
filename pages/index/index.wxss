@@ -13,12 +13,11 @@
 }
 
 .buttonchange{
-  width:128rpx;
-  height: 128rpx;
+  width:200rpx;
+  height: 64rpx;
   margin:20rpx;
   border-radius: 5%;
-  color: #abb
-  
+  color: #abb  
 }
 .userinfo-nickname {
   color: #aaa;
@@ -27,3 +26,4 @@
 .usermotto {
   margin-top: 200px;
 }
+

@@ -7,8 +7,8 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="test">
-    <button bindtap="testchange" class="buttonchange">开锁</button>
+  <view class="test" >
+    <button bindtap="testchange" class="buttonchange" >开锁</button>
     <button class='buttonchange'>关锁</button>
 
   </view>
