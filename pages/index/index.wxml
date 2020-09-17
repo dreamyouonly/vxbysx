@@ -1,11 +1,13 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 请获取头像昵称 </button>
+    <!-- <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 请获取头像昵称 </button>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+    </block> -->
+    <image wx:if="{{status==='off'}}" src="/images/dengpao_off.png"></image>
+    <image wx:else src="/images/dengpao_on.png"></image>
   </view>
   <view class="test" >
     <button bindtap="openButton" class="buttonchange" >开灯</button>

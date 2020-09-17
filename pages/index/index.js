@@ -7,10 +7,11 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    status: "off"
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
@@ -21,7 +22,7 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -43,7 +44,7 @@ Page({
       })
     }
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -51,49 +52,71 @@ Page({
       hasUserInfo: true
     })
   },
-  openButton:function(){
+  openButton: function () {
     console.log("尝试打开LED灯!")
-    var that;
-    var Util = require( 'util.js' );
-    
+    var that = this;
+    var Util = require('util.js');
     wx.request({
       url: 'http://59.46.220.242:9090/index/ctrl',
-      complete: (res) => {},
-      data: Util.json2Form( { status: "on" }),
+      complete: (res) => { },
+      data: Util.json2Form({ status: "on" }),
       dataType: "json",
-      fail: (res) => {},
-      header: { 
-            "Content-Type": "application/x-www-form-urlencoded"
-           },
+      fail: (res) => { },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       method: "POST",
-      success: function(res){
-        console.log(res)
-        wx.showToast({
-          title: '打开LED成功！',
-        })
+      success: function (res) {
+        console.log(res.data)
+        if (res.data.status == "on") {
+          wx.showToast({
+            title: '打开LED成功！'
+          })
+          that.setData({
+            status: 'on'
+          })
+        } else {
+          wx.showToast({
+            title: "失败",
+            icon: 'loading'
+          })
+        }
+
       }
     })
 
   },
-  shutdownButton:function(){
+  shutdownButton: function () {
     console.log("尝试关闭LED灯！")
-    var Util = require( 'util.js' );
-    Util.json2Form( { status: "off" })
+    var that = this;
+    var Util = require('util.js');
+    Util.json2Form({ status: "off" })
     wx.request({
       url: 'http://59.46.220.242:9090/index/ctrl',
-      complete: (res) => {},
-      data: Util.json2Form( { status: "off" }),
+      complete: (res) => { },
+      data: Util.json2Form({ status: "off" }),
       dataType: "json",
-      fail: (res) => {},
-      header: { 
-            "Content-Type": "application/x-www-form-urlencoded"
-           },
+      fail: (res) => { },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       method: "POST",
-      success: function(res){
+      success: function (res) {
         console.log(res.data)
-        wx.showToast({
-          title: '关闭LED成功！',
-        })
+        if (res.data.status == "off") {
+          wx.showToast({
+            title: '关闭LED成功！',
+          })
+          that.setData({
+            status: 'off'
+          })
+        } else {
+          wx.showToast({
+            title: '关闭LED灯失败',
+            icon: 'loading'
+          })
+        }
+
       }
     })
   }
